@@ -182,7 +182,7 @@ for (x in wd){
     saveRDS(data2, file = sprintf("~/soupX_%s_gene_selection.rds",sample_name))
     }
     
-############## Merging Samples to single RDS Post-SoupX ##############
+############## Merging Samples to Single RDS Post-SoupX ##############
     
 setwd("~/SoupX/")
 soupx_files <- list.files("~/SoupX/", pattern="automated.rds")
