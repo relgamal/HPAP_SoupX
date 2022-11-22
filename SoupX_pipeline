@@ -138,7 +138,7 @@ for (sample in samples){
 ############## Automated Version of SoupX ##############
 
 for (x in wd){
-    name <- str_split_fixed(x, "/", n=12)[9] #Adjust this to output your sample name
+    sample_name <- str_split_fixed(x, "/", n=12)[9] #Adjust this to output your sample name
     rna_counts <- Read10X_h5(file.path(x, 'raw_feature_bc_matrix.h5'))
     data <- CreateSeuratObject(counts=rna_counts)
     data[['percent.mt']] <- PercentageFeatureSet(data, pattern = '^MT-')
@@ -192,7 +192,7 @@ for (x in wd){
     data2 <- RunUMAP(data2, dims = 1:30, verbose = FALSE)
     data2 <- FindNeighbors(data2, dims = 1:30, verbose = FALSE)
     data2 <- FindClusters(data2, algorithm=4, resolution = 1, verbose=FALSE)
-    saveRDS(data2, file = sprintf("~/soupX_%s_automated.rds",name))
+    saveRDS(data2, file = sprintf("~/soupX_%s_automated.rds",sample_name))
     }
 
 ############## Gene Selection Version of SoupX ##############
@@ -202,7 +202,7 @@ contam_frac_results0 <- NULL
 contam_frac_results <- data.frame() #contam_frac_results will be a dataframe with all samples and their contamination fraction estimates
 
 for (x in wd){
-    name <- str_split_fixed(x, "/", n=12)[9] #Adjust this to output your sample name
+    sample_name <- str_split_fixed(x, "/", n=12)[9] #Adjust this to output your sample name
     inputdata.10x <- Read10X_h5(file.path(x, 'raw_feature_bc_matrix.h5'))
     rna_counts <- inputdata.10x
     data <- CreateSeuratObject(counts=rna_counts)
@@ -247,7 +247,7 @@ for (x in wd){
     sc <- calculateContaminationFraction(sc,list(B=betaGenes, C=acinarGenes, A = alphaGenes, D = deltaGenes),useToEst=useToEst)
     contamination_fraction <- mean(sc$metaData$rho*100)
     
-    contam_frac_results0$Sample <- name
+    contam_frac_results0$Sample <- sample_name
     contam_frac_results0$ContaminationFraction <- contamination_fraction
     contam_frac_results <- rbind(contam_frac_results, contam_frac_results0)
     
@@ -262,7 +262,7 @@ for (x in wd){
     data2 <- RunUMAP(data2, dims = 1:30, verbose = FALSE)
     data2 <- FindNeighbors(data2, dims = 1:30, verbose = FALSE)
     data2 <- FindClusters(data2, algorithm=4, resolution = 1, verbose=FALSE)
-    saveRDS(data2, file = sprintf("~/soupX_%s_gene_selection.rds",name))
+    saveRDS(data2, file = sprintf("~/soupX_%s_gene_selection.rds",sample_name))
     }
     
 ############## Merging Samples to single RDS Post-SoupX ##############
