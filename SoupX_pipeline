@@ -264,4 +264,19 @@ for (x in wd){
     data2 <- FindClusters(data2, algorithm=4, resolution = 1, verbose=FALSE)
     saveRDS(data2, file = sprintf("~/soupX_%s_gene_selection.rds",name))
     }
+    
+############## Merging Samples to single RDS Post-SoupX ##############
+    
+setwd("~/SoupX/")
+soupx_files <- list.files("~/SoupX/", pattern="automated.rds")
+soupx_data <- list()
+
+for (x in soupx_files){
+    sample_name <- str_split_fixed(x, "_", n=4)[2]  #adjust to output your sample name
+    tmp <- readRDS(x)
+    soupx_data[[sample_name]] <- tmp
+}
    
+soupx_merged_data <- merge(soupx_data[[samples[[1]]]], y=soupx_data[samples[2:length(samples)]], add.cell.ids=samples, project='HPAP')
+soupx_merged_data$library <- substr(rownames(soupx_merged_data@meta.data),1,8)
+soupx_merged_data
