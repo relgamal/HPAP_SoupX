@@ -184,7 +184,7 @@ for (x in wd){
     #Create post-SoupX Seurat Object
     data2 <- CreateSeuratObject(out)
     data2[['percent.mt']] <- PercentageFeatureSet(data2, pattern = '^MT-')
-    data2 <- NormalizeData(data2, normalization.method = "LogNormalize", scale.factor = 10000)
+    data2 <- NormalizeData(data2, normalization.method = "LogNormalize", scale.factor = 10000)  #Can be changed to sctransform
     data2 <- FindVariableFeatures(data2, selection.method = "vst", nfeatures = 2000)
     all.genes <- rownames(data2)
     data2 <- ScaleData(data2, features = all.genes)
@@ -254,7 +254,7 @@ for (x in wd){
     out <- adjustCounts(sc)
     data2 <- CreateSeuratObject(out)
     data2[['percent.mt']] <- PercentageFeatureSet(data2, pattern = '^MT-')
-    data2 <- NormalizeData(data2, normalization.method = "LogNormalize", scale.factor = 10000)
+    data2 <- NormalizeData(data2, normalization.method = "LogNormalize", scale.factor = 10000) #Can be changed to sctransform
     data2 <- FindVariableFeatures(data2, selection.method = "vst", nfeatures = 2000)
     all.genes <- rownames(data2)
     data2 <- ScaleData(data2, features = all.genes)
