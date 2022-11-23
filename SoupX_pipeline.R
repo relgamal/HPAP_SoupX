@@ -40,11 +40,22 @@ other attached packages:
 #######################################################################################################################################################
 
 install.packages("SoupX")
+install.packages("stringr")
+install.packages("reticulate")
 library(SoupX)
+library(stringr)
+library(reticulate)
 library(Seurat)
 library(dplyr)
 library(tidyverse)
 library(data.table)
+
+#'pip install leidenalg' in terminal#
+
+reticulate::py_module_available(module='leidenalg') #needs to be TRUE
+reticulate::import('leidenalg')
+
+#######################################################################################################################################################
 
 samples <- c("HPAP-019","HPAP-020","HPAP-021","HPAP-022","HPAP-023","HPAP-024","HPAP-026","HPAP-027","HPAP-028","HPAP-029","HPAP-032","HPAP-034","HPAP-035","HPAP-036","HPAP-037","HPAP-038", "HPAP-039", "HPAP-040", "HPAP-042","HPAP-043","HPAP-044", "HPAP-045", "HPAP-047","HPAP-049", "HPAP-050","HPAP-052", "HPAP-053", "HPAP-054", "HPAP-055", "HPAP-056","HPAP-059","HPAP-063","HPAP-064","HPAP-071","HPAP-072","HPAP-074","HPAP-075","HPAP-077","HPAP-080","HPAP-082","HPAP-084","HPAP-087","HPAP-092","HPAP-093","HPAP-099","HPAP-101","HPAP-103","HPAP-104","HPAP-105", "HPAP-107")
 
