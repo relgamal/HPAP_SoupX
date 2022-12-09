@@ -64,6 +64,8 @@ for (sample in samples){
     }
 
 ############## Automated Version of SoupX ##############
+contam_frac_results0 <- NULL
+contam_frac_results <- data.frame() #contam_frac_results will be a dataframe with all samples and their contamination fraction estimates
 
 for (x in wd){
     sample_name <- str_split_fixed(x, "/", n=12)[9] #Adjust this to output your sample name
@@ -108,6 +110,11 @@ for (x in wd){
     sc <- setClusters(sc,setNames(metadata$Cluster,rownames(metadata)))
     sc <- autoEstCont(sc)
     out <- adjustCounts(sc)
+ 
+    contamination_fraction <- mean(sc$metaData$rho*100)
+    contam_frac_results0$Sample <- sample_name
+    contam_frac_results0$ContaminationFraction <- contamination_fraction
+    contam_frac_results <- rbind(contam_frac_results, contam_frac_results0)
     
     #Create post-SoupX Seurat Object
     data2 <- CreateSeuratObject(out)
